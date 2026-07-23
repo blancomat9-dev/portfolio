@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Steam Engine — Matías Blanco</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header>
+  <nav>
+    <a class="logo" href="../index.html">MATIAS<span>.</span>BLANCO</a>
+    <div class="nav-links">
+      <a href="../index.html">home</a>
+      <a href="index.html" class="active">projects</a>
+      <a href="../workshops/index.html">workshops</a>
+      <a href="../internships/index.html">internships</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="breadcrumb"><a href="index.html">projects</a> / steam engine</div>
+  <h1 class="page-title">Steam Engine — GEEN 3852 Thermodynamics</h1>
+  <div class="meta">Nov 2024 – Dec 2024 · 4-person team · $50 budget · 4 weeks · CAD &amp; Testing lead</div>
+
+  <div class="detail-body">
+    <p class="lead">The challenge: generate electrical work from wasted energy, on a $50 budget, in four weeks. My team of four decided to harness the waste heat from a stove, turn it into steam, and use that steam to make electricity.</p>
+
+    <h4>My Role</h4>
+    <p>I led CAD design and testing. We started with a water-turbine-inspired rotor and planned to 3D print it in PLA, but PLA's low deformation temperature (60°C) ruled it out fast. Machining a metal rotor wasn't realistic in our timeframe, so we pivoted to a Markforged printer running nylon-carbon fiber filament (deformation temp 143°C) for the durability we needed. On a $50 budget, every design change still meant a cheap PLA prototype first, which is how we ended up going through 14 iterations before the final rotor.</p>
+
+    <h4>Testing</h4>
+    <p>This was the fun part. We heated water, ran it through a copper coil sitting on the stove, and directed the resulting steam straight at our turbine. A teammate and I measured the temperature differences before, during, and after the coil to estimate how much work the turbine could produce.</p>
+
+    <h4>What Went Wrong, and What I Learned</h4>
+    <p>Despite everything, the turbine never generated electricity, and the reasons were instructive. Our generator demanded high torque, which capped the efficiency of our whole design; a lower-torque generator would likely have changed the outcome. On top of that, the project landed right in the middle of midterms and finals, and our communication and time management suffered for it.</p>
+    <ul>
+      <li>Nail down clear design requirements from day one.</li>
+      <li>Don't design your entire system around a single component (our generator) or that component becomes your ceiling.</li>
+      <li>Better planning and communication keep every teammate contributing, and that's what actually drives a good outcome.</li>
+    </ul>
+
+    <h4>Gallery</h4>
+    <div class="gallery">
+      <div class="shot"><a href="img/steam-engine/full-system.jpg" target="_blank" rel="noopener"><img src="img/steam-engine/full-system.jpg" alt="Complete steam engine build: turbine, water reservoir, heater and generator lighting LEDs"></a><div class="cap">The full build — turbine, reservoir, heater and generator lighting the LEDs</div></div>
+      <div class="shot"><a href="img/steam-engine/rotor-casing-cad.jpg" target="_blank" rel="noopener"><img src="img/steam-engine/rotor-casing-cad.jpg" alt="CAD cross-section render of the rotor casing interior"></a><div class="cap">CAD render of the rotor casing interior</div></div>
+      <div class="shot"><a href="img/steam-engine/rotor-casing-drawing.jpg" target="_blank" rel="noopener"><img src="img/steam-engine/rotor-casing-drawing.jpg" alt="Multi-view engineering drawing of the rotor casing"></a><div class="cap">Technical drawing of the rotor casing</div></div>
+      <div class="shot"><a href="img/steam-engine/generator.jpg" target="_blank" rel="noopener"><img src="img/steam-engine/generator.jpg" alt="Generator unit with the rotor mounted, ready to run"></a><div class="cap">The generator with the rotor mounted, ready to run</div></div>
+    </div>
+  </div>
+
+  <div class="detail-nav">
+    <a href="drill-force-1.html">← Drill Force 1</a>
+    <a href="wobbler-engine.html">next: Wobbler Engine →</a>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; <span id="year"></span> Matías Blanco ·
+    <a href="https://www.linkedin.com/in/matias-blanco-mbht/" target="_blank" rel="noopener">LinkedIn</a> ·
+    <a href="mailto:blancomat9@gmail.com">Email</a>
+  </p>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="../js/lightbox.js"></script>
+</body>
+</html>
