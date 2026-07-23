@@ -638,73 +638,99 @@ section { max-width: 1100px; margin: 0 auto; padding: 100px 24px; }
   .bento-cell.featured { grid-row: auto; }
 }
 
-/* Career Gantt — overlapping bars on a shared time axis (roles run concurrently) */
-.gantt { --lab: 240px; margin-top: 8px; }
-.gantt-axis { display: grid; grid-template-columns: var(--lab) 1fr; }
-.gantt-scale {
+/* Vertical overlapping timeline — two-sided cards on a shared vertical time axis.
+   Cards branch left (school) / right (internships); colored rails on the axis show
+   how long each role ran, so concurrent roles line up side by side. Positions are
+   hardcoded px on a 22px/month scale (see internships/index.html); recompute if dates change. */
+.vtl {
   position: relative;
-  height: 22px;
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  color: var(--text-dim);
+  height: 1010px;
+  max-width: 1000px;
+  margin: 8px auto 0;
 }
-.gantt-scale .yr { position: absolute; top: 0; transform: translateX(-50%); white-space: nowrap; }
-.gantt-scale .yr.start { transform: none; }
-.gantt-scale .yr.now { transform: translateX(-100%); color: var(--accent); }
-
-.gantt-row {
-  display: grid;
-  grid-template-columns: var(--lab) 1fr;
-  align-items: center;
-  border-top: 1px dashed var(--border);
-  color: var(--text);
-}
-.gantt-row:last-of-type { border-bottom: 1px dashed var(--border); }
-.gantt-row:hover { text-decoration: none; }
-.gantt-label { padding: 12px 20px 12px 0; }
-.gantt-label .role { display: block; font-size: 0.9rem; font-weight: 600; color: var(--text); line-height: 1.3; }
-.gantt-label .org { font-family: var(--mono); font-size: 0.72rem; color: var(--text-dim); }
-.gantt-label .span { display: block; margin-top: 4px; font-family: var(--mono); font-size: 0.68rem; color: var(--text-dim); }
-
-.gantt-track { position: relative; height: 58px; }
-/* year gridlines: one every 12 of 43 months = 27.907% */
-.gantt-track::before {
+.vtl::before {
   content: '';
   position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: repeating-linear-gradient(90deg, var(--border) 0 1px, transparent 1px 27.907%);
-  opacity: 0.5;
+  left: 50%;
+  top: 30px;
+  bottom: 24px;
+  width: 1px;
+  background: var(--border);
+  transform: translateX(-50%);
 }
-.gantt-bar {
+.vt-axis span {
   position: absolute;
-  top: 16px;
-  height: 26px;
-  min-width: 10px;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  padding: 0 10px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bg);
+  padding: 2px 9px;
   font-family: var(--mono);
   font-size: 0.68rem;
-  font-weight: 600;
-  color: rgba(10,14,23,0.85);
+  color: var(--text-dim);
   white-space: nowrap;
-  overflow: hidden;
-  transition: filter 0.15s ease, box-shadow 0.15s ease;
+  z-index: 2;
 }
-.gantt-bar.school { background: var(--school); }
-.gantt-bar.intern { background: var(--intern); }
-.gantt-row:hover .gantt-bar { filter: brightness(1.18); box-shadow: 0 0 0 1px currentColor, 0 6px 20px rgba(0,0,0,0.45); z-index: 3; }
-.gantt-row:hover .gantt-label .role { color: var(--accent); }
+.vt-axis span.now { color: var(--accent); }
+.vt-rail { position: absolute; width: 5px; border-radius: 3px; opacity: 0.8; }
+.vt-rail.school { background: var(--school); }
+.vt-rail.intern { background: var(--intern); }
 
-@media (max-width: 640px) {
-  .gantt { --lab: 148px; }
-  .gantt-label { padding-right: 12px; }
-  .gantt-label .role { font-size: 0.78rem; }
-  .gantt-label .org { display: none; }
-  .gantt-track { height: 52px; }
-  .gantt-bar { font-size: 0; padding: 0; }
+.vt-card {
+  position: absolute;
+  width: min(360px, 40%);
+  box-sizing: border-box;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 12px 16px;
+  color: var(--text);
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+.vt-card.left { right: calc(50% + 34px); }
+.vt-card.right { left: calc(50% + 34px); }
+.vt-card.school { border-left: 3px solid var(--school-dim); background: linear-gradient(var(--school-bg), var(--school-bg)), var(--card); }
+.vt-card.intern { border-left: 3px solid var(--intern-dim); background: linear-gradient(var(--intern-bg), var(--intern-bg)), var(--card); }
+.vt-card::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 34px;
+  height: 1px;
+  background: var(--border);
+}
+.vt-card.left::after { right: -34px; }
+.vt-card.right::after { left: -34px; }
+
+.vt-card .vt-dates { font-family: var(--mono); font-size: 0.72rem; margin-bottom: 4px; }
+.vt-card.school .vt-dates { color: var(--school); }
+.vt-card.intern .vt-dates { color: var(--intern); }
+.vt-card .vt-role { font-size: 1rem; font-weight: 600; line-height: 1.25; margin-bottom: 3px; }
+.vt-card .vt-org { font-family: var(--mono); font-size: 0.74rem; color: var(--text-dim); }
+
+/* light up blue on hover, like the featured tile */
+.vt-card:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  text-decoration: none;
+  z-index: 6;
+  transform: translateY(-1px);
+}
+.vt-card:hover .vt-role,
+.vt-card:hover .vt-org,
+.vt-card:hover .vt-dates { color: #0a0e17; }
+
+@media (max-width: 720px) {
+  .vtl { height: auto; max-width: none; }
+  .vtl::before, .vt-axis, .vt-rail { display: none; }
+  .vt-card {
+    position: static;
+    width: auto;
+    right: auto;
+    left: auto;
+    margin-bottom: 12px;
+    transform: none;
+  }
+  .vt-card::after { display: none; }
 }
 
 footer {
